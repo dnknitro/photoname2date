@@ -1,0 +1,7 @@
+#summary Version 2.0.1.0 released
+
+= Summary =
+
+ * Significantly improved speed of preview.
+ * Double click opens image / video in default viewer
+ * Added checkbox to view only checked files
