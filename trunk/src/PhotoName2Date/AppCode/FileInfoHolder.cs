@@ -6,11 +6,11 @@ using ExifLib;
 
 namespace PhotoName2Date.MiddleLayer
 {
-	public delegate void FileProcessedDelegate(FileInfoHolder fih, int current, int total);
+	public delegate void FileProcessedDelegate( FileInfoHolder fih, int current, int total );
 
 	public class FileInfoHolder
 	{
-		public FileInfoHolder(string fullFilename, DataRow dr)
+		public FileInfoHolder( string fullFilename, DataRow dr )
 		{
 			_dr = dr;
 			this.NeedRename = true;
@@ -22,7 +22,7 @@ namespace PhotoName2Date.MiddleLayer
 
 		public void ResolveIndex()
 		{
-			while (File.Exists(this.NewFullFilename))
+			while( File.Exists( this.NewFullFilename ) )
 			{
 				this._index++;
 			}
@@ -62,15 +62,15 @@ namespace PhotoName2Date.MiddleLayer
 			set
 			{
 				_fullFilename = value;
-				this.FilePath = Path.GetDirectoryName(_fullFilename);
-				this.FilenameOnly = Path.GetFileNameWithoutExtension(_fullFilename);
-				this.Ext = Path.GetExtension(_fullFilename);
-				this.DetectedDateTime = FileInfoHolder.GetDateTime(_fullFilename);
+				this.FilePath = Path.GetDirectoryName( _fullFilename );
+				this.FilenameOnly = Path.GetFileNameWithoutExtension( _fullFilename );
+				this.Ext = Path.GetExtension( _fullFilename );
+				this.DetectedDateTime = FileInfoHolder.GetDateTime( _fullFilename );
 
-				DateTime shifted = Utils.ShiftDateTime(_detectedDateTime,
-				                                       (int) global::PhotoName2Date.Properties.Settings.Default.ShiftTimeByHours);
+				DateTime shifted = Utils.ShiftDateTime( _detectedDateTime,
+													   (int)global::PhotoName2Date.Properties.Settings.Default.ShiftTimeByHours );
 
-				this.NewFilenameOnly = shifted.ToString(global::PhotoName2Date.Properties.Settings.Default.RenamePattern);
+				this.NewFilenameOnly = shifted.ToString( global::PhotoName2Date.Properties.Settings.Default.RenamePattern );
 				_index = 0;
 				//this.UpdateDataRow();
 			}
@@ -99,7 +99,7 @@ namespace PhotoName2Date.MiddleLayer
 
 		private string _suffix
 		{
-			get { return this._index > 0 ? (MyFile.SUFFIX_SEPARATOR + this._index.ToString(MyFile.SUFFIX_FORMAT)) : string.Empty; }
+			get { return this._index > 0 ? ( MyFile.SUFFIX_SEPARATOR + this._index.ToString( MyFile.SUFFIX_FORMAT ) ) : string.Empty; }
 		}
 
 		private DateTime _detectedDateTime;
@@ -117,7 +117,7 @@ namespace PhotoName2Date.MiddleLayer
 			set
 			{
 				_dr[DbColumns.newFilenameOnly] = value;
-				if (this.FilenameOnly.StartsWith(value))
+				if( this.FilenameOnly.StartsWith( value ) )
 				{
 					this.NeedRename = false;
 				}
@@ -132,7 +132,7 @@ namespace PhotoName2Date.MiddleLayer
 		//private bool _needRename = true;
 		public bool NeedRename
 		{
-			get { return Convert.ToBoolean(_dr[DbColumns.needRename]); }
+			get { return Convert.ToBoolean( _dr[DbColumns.needRename] ); }
 			set { _dr[DbColumns.needRename] = value; }
 		}
 
@@ -147,53 +147,53 @@ namespace PhotoName2Date.MiddleLayer
 		/// renames the file
 		/// </summary>
 		/// <returns>info to write into log</returns>
-		public void Rename(bool touch)
+		public void Rename( bool touch )
 		{
-			if (!this.NeedRename)
+			if( !this.NeedRename )
 			{
 				return;
 			}
 
-			if (touch)
+			if( touch )
 			{
 				this.Touch();
 			}
 
 			this.ResolveIndex();
-			File.Move(this.FullFilename, this.NewFullFilename);
+			File.Move( this.FullFilename, this.NewFullFilename );
 			this.NewFilenameOnly = this.NewFilenameOnly + this._suffix;
 			this.Status = "done";
 		}
 
 		public void Touch()
 		{
-			File.SetLastWriteTime(this.FullFilename,
-			                      Utils.ShiftDateTime(_detectedDateTime,
-			                                          (int) global::PhotoName2Date.Properties.Settings.Default.ShiftTimeByHours));
+			File.SetLastWriteTime( this.FullFilename,
+								  Utils.ShiftDateTime( _detectedDateTime,
+													  (int)global::PhotoName2Date.Properties.Settings.Default.ShiftTimeByHours ) );
 		}
 
 		#region static
 
 		private static readonly Dictionary<string, DateTime> _filePathCached = new Dictionary<string, DateTime>();
 
-		private static DateTime GetDateTime(string fileName)
+		private static DateTime GetDateTime( string fileName )
 		{
-			if (_filePathCached.ContainsKey(fileName))
+			if( _filePathCached.ContainsKey( fileName ) )
 			{
 				return _filePathCached[fileName];
 			}
 
-			DateTime newDateTime = GetExifDateTime(fileName);
-			if (newDateTime == DateTime.MinValue)
+			DateTime newDateTime = GetExifDateTime( fileName );
+			if( newDateTime == DateTime.MinValue )
 			{
 				//FireInfo("  getting filesystem info:");
-				newDateTime = GetFileSystemDateTime(fileName);
+				newDateTime = GetFileSystemDateTime( fileName );
 			}
 			_filePathCached[fileName] = newDateTime;
 			return newDateTime;
 		}
 
-		private static DateTime GetExifDateTime(string fileName)
+		private static DateTime GetExifDateTime( string fileName )
 		{
 			var fileExifDatetime = DateTime.MinValue;
 
@@ -207,28 +207,27 @@ namespace PhotoName2Date.MiddleLayer
 			ExifReader reader = null;
 			try
 			{
-				reader = new ExifReader(fileName);
-			}
-			catch (Exception ex)
-			{
-				if (!messages.Contains(ex.Message))
-					throw;
-			}
-
-			if (reader != null)
-			{
-				var tags = new[] { ExifTags.DateTimeOriginal, ExifTags.DateTime, ExifTags.DateTimeDigitized };
-				foreach (var tag in tags)
+				using( reader = new ExifReader( fileName ) )
 				{
-					try
+
+					var tags = new[] { ExifTags.DateTimeOriginal, ExifTags.DateTime, ExifTags.DateTimeDigitized };
+					foreach( var tag in tags )
 					{
-						if (reader.GetTagValue(tag, out fileExifDatetime) && fileExifDatetime > DateTime.MinValue)
-							break;
-					}
-					catch (FormatException)
-					{
+						try
+						{
+							if( reader.GetTagValue( tag, out fileExifDatetime ) && fileExifDatetime > DateTime.MinValue )
+								break;
+						}
+						catch( FormatException )
+						{
+						}
 					}
 				}
+			}
+			catch( Exception ex )
+			{
+				if( !messages.Contains( ex.Message ) )
+					throw;
 			}
 			return fileExifDatetime;
 
@@ -297,12 +296,12 @@ namespace PhotoName2Date.MiddleLayer
 			//return fileExifDatetime;
 		}
 
-		private static DateTime GetFileSystemDateTime(string fileName)
+		private static DateTime GetFileSystemDateTime( string fileName )
 		{
 			//FileInfo fi = new FileInfo(fileName);
 			//return fi.CreationTime > fi.LastWriteTime ? fi.CreationTime : fi.LastWriteTime;
 
-			return File.GetLastWriteTime(fileName);
+			return File.GetLastWriteTime( fileName );
 		}
 
 		//private static readonly int[] IDS_ALLOWED = new[] {36867, 306, 36868};
