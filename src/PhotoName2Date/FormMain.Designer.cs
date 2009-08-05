@@ -111,9 +111,9 @@ namespace PhotoName2Date {
 			this.checkBoxShowAffectedOnly.Location = new System.Drawing.Point( 0, 2 );
 			this.checkBoxShowAffectedOnly.Name = "checkBoxShowAffectedOnly";
 			this.checkBoxShowAffectedOnly.Padding = new System.Windows.Forms.Padding( 38, 0, 0, 0 );
-			this.checkBoxShowAffectedOnly.Size = new System.Drawing.Size( 174, 21 );
+			this.checkBoxShowAffectedOnly.Size = new System.Drawing.Size( 177, 21 );
 			this.checkBoxShowAffectedOnly.TabIndex = 3;
-			this.checkBoxShowAffectedOnly.Text = "show affected files only";
+			this.checkBoxShowAffectedOnly.Text = "show checked files only";
 			this.checkBoxShowAffectedOnly.UseVisualStyleBackColor = true;
 			this.checkBoxShowAffectedOnly.CheckedChanged += new System.EventHandler( this.checkBoxShowAffectedOnly_CheckedChanged );
 			// 
