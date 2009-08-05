@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("dnk")]
 [assembly: AssemblyProduct("PhotoName2Date")]
-[assembly: AssemblyCopyright("Copyright © Volodymyr Shcherbyna aka dnk.nitro 2008")]
+[assembly: AssemblyCopyright( "Copyright © Volodymyr Shcherbyna / dnk.nitro 2009" )]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion( "2.0.1.0" )]
-[assembly: AssemblyFileVersion( "2.0.1.0" )]
+[assembly: AssemblyVersion( "2.0.2.0" )]
+[assembly: AssemblyFileVersion( "2.0.2.0" )]
