@@ -48,7 +48,7 @@ namespace NameFix
 				if(pair.Key == "-E")
 					Settings.Default.Extensions = pair.Value;
 				if(pair.Key == "-P")
-					Settings.Default.Extensions = pair.Value;
+					Settings.Default.RenamePattern = pair.Value;
 				if(pair.Key == "-T")
 					Settings.Default.Touch = string.IsNullOrEmpty(pair.Value) || bool.Parse(pair.Value);
 				if(pair.Key == "-R")
@@ -63,8 +63,18 @@ namespace NameFix
 				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new MainForm());
 			}
+			else if(argsDic.ContainsKey("-H"))
+			{
+				Console.WriteLine("NameFix.exe <Path To Folder> will rename all files in provided folder");
+				Console.WriteLine("-ui runs application in interactive mode");
+				Console.WriteLine("-e *.jpg;*.cr2;*.avi specifies list of files extensions which should be handled");
+				Console.WriteLine("-p \"yyyy-MM-dd HH-mm-ss\" specifies file rename pattern");
+				Console.WriteLine("-t true|false specifies if file modified date should be changed");
+				Console.WriteLine("-r true|false specifies if application should look up files in all subfolder of the provided folder");
+			}
 			else
 			{
+				Console.WriteLine("NameFix.exe -h displays command line help");
 				FilesList.PreviewFinished += FilesListOnPreviewFinished;
 				FilesList.DoPreview(null, folder);
 			}
