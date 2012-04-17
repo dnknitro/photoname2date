@@ -109,7 +109,7 @@ namespace NameFix.AppCode
 
 		private string GetStatusMessage(FileInfoHolder fih, int current, int total)
 		{
-			return string.Format("({0}/{1}) {2} => {3}", current, total, fih.FilenameOnly, fih.NewFilenameOnly);
+			return string.Format("({0}/{1}) {2} => {3} {4}", current, total, fih.FilenameOnly, fih.NewFilenameOnly, fih.NeedRename ? "Yes" : "No");
 		}
 
 		public void DoPreviewAsync(string path)
@@ -191,7 +191,8 @@ namespace NameFix.AppCode
 				current++;
 
 				fih.Rename(Settings.Default.Touch);
-				FireSenderMessage(FileRenamed, GetStatusMessage(fih, current, total));
+				if(fih.NeedRename)
+					FireSenderMessage(FileRenamed, GetStatusMessage(fih, current, total));
 			}
 			FireSenderMessage(RenameFinished, "Rename finished");
 		}

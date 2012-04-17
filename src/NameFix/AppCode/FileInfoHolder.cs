@@ -13,7 +13,7 @@ namespace NameFix.AppCode
 		private DateTime _detectedDateTime;
 		private DataRow _dr;
 		private string _fullFilename;
-		private int _index = 1;
+		private int _index;
 
 		public FileInfoHolder(string fullFilename, DataRow dr)
 		{
@@ -232,7 +232,7 @@ namespace NameFix.AppCode
 					(int)NameFix.Properties.Settings.Default.ShiftTimeByHours);
 
 				NewFilenameOnly = shifted.ToString(NameFix.Properties.Settings.Default.RenamePattern);
-				_index = 1;
+				_index = 0;
 				//this.UpdateDataRow();
 			}
 		}

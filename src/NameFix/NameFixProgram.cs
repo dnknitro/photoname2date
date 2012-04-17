@@ -55,6 +55,8 @@ namespace NameFix
 					Settings.Default.RecurseSubdirs = string.IsNullOrEmpty(pair.Value) || bool.Parse(pair.Value);
 			}
 
+			FilesList.Message += LogMessage;
+
 			if(argsDic.ContainsKey("-UI"))
 			{
 				Application.EnableVisualStyles();
@@ -63,7 +65,6 @@ namespace NameFix
 			}
 			else
 			{
-				FilesList.Message += LogMessage;
 				FilesList.PreviewFinished += FilesListOnPreviewFinished;
 				FilesList.DoPreview(null, folder);
 			}
