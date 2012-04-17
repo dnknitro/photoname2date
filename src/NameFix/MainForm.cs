@@ -146,7 +146,6 @@ namespace NameFix
 			DataSource = NameFixProgram.FilesList.DatFile;
 			ChangeEnabled(false);
 			dataGridViewFiles.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-			checkBoxShowAffectedOnly.Checked = true;
 		}
 
 		private void toolStripButtonRename_Click(object sender, EventArgs e)
