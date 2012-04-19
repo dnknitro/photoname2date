@@ -499,7 +499,7 @@ namespace NameFix {
 			this.Location = global::NameFix.Properties.Settings.Default.Location;
 			this.MinimumSize = new System.Drawing.Size(625, 420);
 			this.Name = "MainForm";
-			this.Text = "PhotoName2Date";
+			this.Text = "NameFix";
 			this.Load += new System.EventHandler(this.FormMain_Load);
 			this.groupBoxOptions.ResumeLayout(false);
 			this.panelOptions4.ResumeLayout(false);
