@@ -17,7 +17,6 @@
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>86E2A5380F603768007F97F125AA2EE000FB2CBA</ManifestCertificateThumbprint>
-    <ManifestKeyFile>PhotoName2Date_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>false</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
