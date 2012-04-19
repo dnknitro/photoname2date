@@ -496,6 +496,7 @@ namespace NameFix {
 			this.Controls.Add(this.menuStrip1);
 			this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::NameFix.Properties.Settings.Default, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.DataBindings.Add(new System.Windows.Forms.Binding("ClientSize", global::NameFix.Properties.Settings.Default, "ClientSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Location = global::NameFix.Properties.Settings.Default.Location;
 			this.MinimumSize = new System.Drawing.Size(625, 420);
 			this.Name = "MainForm";
