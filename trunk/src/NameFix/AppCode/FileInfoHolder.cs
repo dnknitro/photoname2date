@@ -225,7 +225,7 @@ namespace NameFix.AppCode
 				_fullFilename = value;
 				FilePath = Path.GetDirectoryName(_fullFilename);
 				FilenameOnly = Path.GetFileNameWithoutExtension(_fullFilename);
-				Ext = Path.GetExtension(_fullFilename);
+				Ext = Path.GetExtension(_fullFilename).ToLower();
 				DetectedDateTime = GetDateTime(_fullFilename);
 
 				DateTime shifted = Utils.ShiftDateTime(_detectedDateTime,

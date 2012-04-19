@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Linq;
 using NameFix.Properties;
 
 namespace NameFix.AppCode
@@ -180,6 +181,20 @@ namespace NameFix.AppCode
 			FireSenderMessage(RenameStarted, "Rename Started");
 			var current = 0;
 			var total = _drToHolder.Count;
+
+			foreach(var fih in _drToHolder.Values)
+			{
+				//handle .cr2 files with the same names as .jpg file:
+				if(fih.Ext != ".jpg") continue;
+				var cr2fih = _drToHolder.Values.SingleOrDefault(x =>
+					x.Ext == ".cr2"
+					&& fih.FilenameOnly.ToUpper() == x.FilenameOnly.ToUpper()
+					&& fih.NewFilenameOnly.ToUpper() != x.NewFilenameOnly.ToUpper()
+					);
+				if(cr2fih == null) continue;
+				cr2fih.NewFilenameOnly = fih.NewFilenameOnly;
+			}
+
 			foreach(var fih in _drToHolder.Values)
 			{
 				if((worker != null && worker.CancellationPending) || (_form != null && _form.IsDisposed))
