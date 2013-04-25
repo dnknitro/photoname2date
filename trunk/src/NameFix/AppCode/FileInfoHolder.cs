@@ -88,7 +88,8 @@ namespace NameFix.AppCode
 			var messages = new List<string>
 			{
 				"Could not find Exif data block",
-				"File is not a valid JPEG"
+				"File is not a valid JPEG",
+				"Unable to locate Exif data",
 			};
 
 			// Instantiate the reader
